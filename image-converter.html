@@ -1,309 +1,173 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片颜色反转工具</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 900px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            text-align: center;
-        }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 2.2rem;
-        }
-        
-        .description {
-            color: #7f8c8d;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-        
-        .upload-container {
-            border: 3px dashed #3498db;
-            border-radius: 12px;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-            background-color: #f8fafc;
-        }
-        
-        .upload-container:hover {
-            background-color: #eef5ff;
-            border-color: #2980b9;
-        }
-        
-        .upload-container p {
-            margin-bottom: 20px;
-            color: #7f8c8d;
-            font-size: 1.1rem;
-        }
-        
-        .btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
-            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-            margin: 5px;
-        }
-        
-        .btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-        
-        .btn:active {
-            transform: translateY(1px);
-        }
-        
-        .btn-download {
-            background: #27ae60;
-        }
-        
-        .btn-download:hover {
-            background: #219653;
-        }
-        
-        .preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .preview-box {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-        }
-        
-        .preview-box h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        
-        .preview-image {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            display: none;
-        }
-        
-        .inverted {
-            filter: invert(100%);
-        }
-        
-        .actions {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            gap: 10px;
-        }
-        
-        .note {
-            text-align: center;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .preview-container {
-                flex-direction: column;
-            }
-            
-            .actions {
-                flex-direction: column;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片反转器</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #1e293b;
+      color: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background: #334155;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+
+    input[type="file"] {
+      margin: 15px 0;
+    }
+
+    .preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .preview-box {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    img, canvas {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 2px solid #475569;
+      background: #0f172a;
+    }
+
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #2563eb;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .status {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>图片颜色反转工具</h1>
-        <p class="description">将您的黑底白字图片转换为白底黑字效果</p>
-        
-        <div class="upload-container" id="drop-area">
-            <p>拖放图片到这里或点击下方按钮选择文件</p>
-            <input type="file" id="file-input" accept="image/*" class="hidden">
-            <button class="btn" id="select-button">选择图片</button>
-        </div>
-        
-        <div class="preview-container">
-            <div class="preview-box">
-                <h3>原始图片</h3>
-                <img id="original-image" class="preview-image" alt="原始图片预览">
-            </div>
-            <div class="preview-box">
-                <h3>转换后图片</h3>
-                <img id="converted-image" class="preview-image" alt="转换后图片预览">
-            </div>
-        </div>
-        
-        <div class="actions">
-            <button class="btn" id="convert-button">转换图片</button>
-            <button class="btn btn-download" id="download-button">下载转换后图片</button>
-        </div>
-        
-        <div class="note">
-            <p><strong>使用说明：</strong> 上传黑底白字的图片，点击"转换图片"按钮，然后可以下载转换后的白底黑字图片。</p>
-            <p>支持JPG、PNG等常见图片格式，最大支持5MB的图片文件。</p>
-        </div>
+  <div class="card">
+    <h1>图片反转器</h1>
+    <p>上传一张图片，我会生成反转后的版本，支持下载</p>
+    <input type="file" id="file-input" accept="image/*">
+    
+    <div class="preview">
+      <div class="preview-box">
+        <h3>原始图片</h3>
+        <img id="original" alt="原始图片" />
+      </div>
+      <div class="preview-box">
+        <h3>反转图片</h3>
+        <canvas id="canvas"></canvas>
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const fileInput = document.getElementById('file-input');
-            const selectButton = document.getElementById('select-button');
-            const convertButton = document.getElementById('convert-button');
-            const downloadButton = document.getElementById('download-button');
-            const originalImage = document.getElementById('original-image');
-            const convertedImage = document.getElementById('converted-image');
-            const dropArea = document.getElementById('drop-area');
-            
-            // 点击选择按钮触发文件输入
-            selectButton.addEventListener('click', function() {
-                fileInput.click();
-            });
-            
-            // 处理文件选择
-            fileInput.addEventListener('change', function(e) {
-                handleFiles(e.target.files);
-            });
-            
-            // 拖放功能
-            dropArea.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                dropArea.style.backgroundColor = '#e3f2fd';
-                dropArea.style.borderColor = '#2980b9';
-            });
-            
-            dropArea.addEventListener('dragleave', function() {
-                dropArea.style.backgroundColor = '#f8fafc';
-                dropArea.style.borderColor = '#3498db';
-            });
-            
-            dropArea.addEventListener('drop', function(e) {
-                e.preventDefault();
-                dropArea.style.backgroundColor = '#f8fafc';
-                dropArea.style.borderColor = '#3498db';
-                
-                if (e.dataTransfer.files.length) {
-                    handleFiles(e.dataTransfer.files);
-                }
-            });
-            
-            // 转换按钮点击事件
-            convertButton.addEventListener('click', function() {
-                if (originalImage.src) {
-                    convertedImage.src = originalImage.src;
-                    convertedImage.classList.add('inverted');
-                    convertedImage.style.display = 'block';
-                } else {
-                    alert('请先上传图片！');
-                }
-            });
-            
-            // 下载按钮点击事件
-            downloadButton.addEventListener('click', function() {
-                if (!convertedImage.src) {
-                    alert('请先转换图片！');
-                    return;
-                }
-                
-                // 创建下载链接
-                const link = document.createElement('a');
-                link.download = 'converted-image.png';
-                
-                // 将图片转换为canvas以下载
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = convertedImage.naturalWidth;
-                canvas.height = convertedImage.naturalHeight;
-                
-                ctx.filter = 'invert(100%)';
-                ctx.drawImage(originalImage, 0, 0);
-                
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-            
-            // 处理上传的文件
-            function handleFiles(files) {
-                if (files.length === 0) return;
-                
-                const file = files[0];
-                
-                // 检查文件类型
-                if (!file.type.match('image.*')) {
-                    alert('请上传图片文件！');
-                    return;
-                }
-                
-                // 检查文件大小（最大5MB）
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('图片大小不能超过5MB！');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    originalImage.src = e.target.result;
-                    originalImage.style.display = 'block';
-                    
-                    // 隐藏之前的转换结果
-                    convertedImage.style.display = 'none';
-                    convertedImage.classList.remove('inverted');
-                };
-                
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
+    <button id="download-btn" class="hidden">下载反转图片</button>
+    <div class="status" id="status">请上传图片</div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById("file-input");
+    const originalImg = document.getElementById("original");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const downloadBtn = document.getElementById("download-btn");
+    const statusText = document.getElementById("status");
+
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("请上传图片文件！");
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert("图片大小不能超过5MB！");
+        return;
+      }
+
+      statusText.textContent = "加载中，请稍候...";
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        originalImg.src = evt.target.result;
+
+        originalImg.onload = function() {
+          canvas.width = originalImg.naturalWidth;
+          canvas.height = originalImg.naturalHeight;
+
+          ctx.drawImage(originalImg, 0, 0);
+          let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          let data = imageData.data;
+
+          for (let i = 0; i < data.length; i += 4) {
+            data[i] = 255 - data[i];     // R
+            data[i+1] = 255 - data[i+1]; // G
+            data[i+2] = 255 - data[i+2]; // B
+          }
+
+          ctx.putImageData(imageData, 0, 0);
+
+          statusText.textContent = "反转完成 ✅";
+          downloadBtn.classList.remove("hidden");
+        };
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // 下载反转后的图片
+    downloadBtn.addEventListener("click", () => {
+      const link = document.createElement("a");
+      link.download = "inverted-image.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  </script>
 </body>
 </html>
